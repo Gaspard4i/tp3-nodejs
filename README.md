@@ -39,7 +39,7 @@
 	```
 	Si la version affichée dans le terminal n'est pas au moins la 21, suivez les instructions du TP1 du cours de JS pour installer nvm : https://gitlab.univ-lille.fr/js/tp1/-/blob/main/A-preparatifs-linux.md#2-installation-et-configuration-de-node
 
-7. **Récupérez et lisez le pdf du cours** sur moodle : https://moodle.univ-lille.fr/pluginfile.php/2948821/mod_resource/content/0/sae-cours-2-nodejs-socketio.pdf)
+7. **Récupérez et lisez le pdf du cours** sur moodle : https://moodle.univ-lille.fr/pluginfile.php/3900497/mod_resource/content/0/cours-jsae-2-nodejs-socketio.pdf)
 
 	_**En cas de question interpellez votre encadrant.e de TP !**_
 
