@@ -1,3 +1,4 @@
+import ChatRepository from './ChatRepository.js';
 import renderMessageList from './renderMessageList.js';
 
 const userName = // récupère le nom de l'utilisateur
@@ -8,11 +9,22 @@ const userName = // récupère le nom de l'utilisateur
 // sauvegarde du userName en sessionStorage pour ne pas le redemander en cas de refresh
 sessionStorage.setItem('userName', userName);
 
+const chatRepository = new ChatRepository();
+chatRepository.currentAuthor = userName;
+
+const bc = new BroadcastChannel('JSelegram');
+bc.addEventListener('message', event => {
+	chatRepository.addMessage(event.data.text, event.data.author);
+	render();
+});
+
 // affichage de la liste des messages
 const messagesContainer = document.querySelector('.message-history');
 function render() {
 	// affichage des messages
-	messagesContainer.innerHTML = renderMessageList([]);
+	messagesContainer.innerHTML = renderMessageList(
+		chatRepository.messageHistory
+	);
 	// scroll auto
 	messagesContainer.scrollTo({
 		top: messagesContainer.scrollHeight,
@@ -28,6 +40,8 @@ function handleFormSubmit(event) {
 	event.preventDefault();
 	// envoie le nouveau message
 	console.log('nouveau message :', messageInput.value);
+	chatRepository.addMessage(messageInput.value, userName);
+	bc.postMessage({ text: messageInput.value, author: userName });
 	render();
 	// vide le champ de saisie
 	messageInput.value = '';
