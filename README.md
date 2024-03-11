@@ -157,7 +157,7 @@ Le principe c'est que, de la même manière qu'on laissait VSCode lancer un navi
 		],
 	}
 	```
-	> _**NB :** cette configuration est basée sur l'exemple fourni dans la documentation du debug Node dans VScode et permet de lancer notre script custom "npm run dev" : https://code.visualstudio.com/docs/nodejs/nodejs-debugging#\_launch-configuration-support-for-npm-and-other-tools ._
+	> _**NB :** cette configuration est basée sur l'exemple fourni dans la documentation du debug Node dans VScode et permet de lancer notre script custom "npm run dev" : https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_launch-configuration-support-for-npm-and-other-tools ._
 
 2. **Stoppez la commande `npm run server:watch` lancée au point C.1. et lancez le debug du serveur en appuyant sur la touche <kbd>F5</kbd>**
 
@@ -211,7 +211,7 @@ Le principe c'est que, de la même manière qu'on laissait VSCode lancer un navi
 	},
 	```
 
-	> ***NB :** il est aussi possible de renseigner les variables d'environnement dans un fichier `.env` et de configurer le debug comme indiqué ici : https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_load-environment-variables-from-external-file*
+	> _**NB :** il est aussi possible de renseigner les variables d'environnement dans un fichier `.env` et de configurer le debug comme indiqué ici : https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_load-environment-variables-from-external-file ._
 
 4. **Stoppez puis relancez votre session de debug, puis modifiez votre fichier `server/index.js` de manière à ne plus avoir de numéro de port en dur mais à le récupérer depuis la variable d'environnement `PORT`.**
 
