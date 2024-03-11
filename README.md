@@ -25,7 +25,7 @@
 
 ## A. Préparatifs
 
-1. **Commencez par faire un fork du TP en vous rendant directement sur https://gitlab.univ-lille.fr/jsae/tp2-tests/-/forks/new**
+1. **Commencez par faire un fork du TP en vous rendant directement sur https://gitlab.univ-lille.fr/jsae/tp3-nodejs/-/forks/new**
 
 	Pour le `namespace` choisissez de placer le fork dans votre profil utilisateur.\
 	Pour `Visibility Level` sélectionnez le **mode "private"**
