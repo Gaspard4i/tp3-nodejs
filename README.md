@@ -211,7 +211,7 @@ Le principe c'est que, de la même manière qu'on laissait VSCode lancer un navi
 	},
 	```
 
-	> _**NB :** il est aussi possible de renseigner les variables d'environnement dans un fichier `.env` et de configurer le debug comme indiqué ici : https://code.visualstudio.com/docs/nodejs/nodejs-debugging#\_load-environment-variables-from-external-file_
+	> _**NB :** il est aussi possible de renseigner les variables d'environnement dans un fichier `.env` et de configurer le debug comme indiqué ici : https://code.visualstudio.com/docs/nodejs/nodejs-debugging#\\_load-environment-variables-from-external-file_
 
 4. **Stoppez puis relancez votre session de debug, puis modifiez votre fichier `server/index.js` de manière à ne plus avoir de numéro de port en dur mais à le récupérer depuis la variable d'environnement `PORT`.**
 
