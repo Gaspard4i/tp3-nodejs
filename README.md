@@ -393,7 +393,7 @@ Ce que l'on vous propose ici c'est plutôt de **migrer toute la partie "métier"
 	npm run test:watch
 	```
 
-	⚠️ **Cette commande devra rester lancée pendant toute la suite du TP !** Gardez bien un oeil dessus en permanence ! 👀 ⚠️
+	⚠️ **Cette commande devra rester lancée pendant toute la suite du TP !** Gardez bien un oeil dessus en permanence ! 👀 ⚠️ Il est probable que vous ayez à modifier le ChatRepository et donc les tests dans la suite du TP.
 
 2. **Dans le code côté client, supprimez l'import et tous les appels à ChatRepository.**
 
