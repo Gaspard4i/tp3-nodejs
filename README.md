@@ -254,7 +254,7 @@ _**Express est un micro-framework qui simplifie la création d'applis web avec N
 Comme on utilise maintenant du JS à la fois pour le back et le front, c'est du coup beaucoup plus facile de faire du dev fullstack !
 
 Le code **backend** s'exécute dans **Node.js**, côté serveur.
-Le code **frontend** s'exécute (après compilation par Babel et Webpack) dans le **navigateur** des personnes qui visitent le site, côté client.
+Le code **frontend** s'exécute (_après compilation par Babel et Webpack_) dans le **navigateur** des personnes qui visitent le site, côté client.
 
 1. **Observez le contenu du dossier `/client` :**
 
@@ -281,7 +281,7 @@ Le code **frontend** s'exécute (après compilation par Babel et Webpack) dans l
 
 4. **Maintenant que le fichier compilé est généré, il ne reste plus qu'à l'inclure dans la page `client/public/index.html` :** ajoutez une balise `<script>` qui pointe vers `/build/main.bundle.js`.
 
-	Ouvrez dans votre navigateur la page http://localhost:8000, vous devez en principe voir un prompt demander un nom d'utilisateur puis l'interface du chat s'afficher :
+	Ouvrez dans votre navigateur la page http://localhost:8000, vous devez en principe voir un prompt vous demander un nom d'utilisateur puis l'interface du chat s'afficher :
 
 	<img src="images/readme/screen-00.png">
 
