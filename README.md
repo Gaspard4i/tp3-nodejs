@@ -9,7 +9,7 @@
 ## Sommaire <!-- omit in toc -->
 - [A. Préparatifs](#a-préparatifs)
 - [B. Premier script Node.js](#b-premier-script-nodejs)
-- [C. Debug avec Node \& VSCode](#c-debug-avec-node-vscode)
+- [C. Debug avec Node \& VSCode](#c-debug-avec-node--vscode)
 	- [C.1. Reload auto](#c1-reload-auto)
 	- [C.2. Debug dans VSCode](#c2-debug-dans-vscode)
 - [D. Créer un serveur web](#d-créer-un-serveur-web)
@@ -278,6 +278,8 @@ Le code **frontend** s'exécute (_après compilation par Babel et Webpack_) dans
 	la compilation doit fonctionner et générer le fichier `client/public/build/main.bundle.js` :
 
 	<img src="images/readme/run-build-success.png">
+
+	> 🚧 _En cas d'erreur, pensez à vérifier que vous êtes bien sur la version 21 de node avec la commande `node -v` sinon installez-la avec `nvm install 21 && nvm use 21`._
 
 4. **Maintenant que le fichier compilé est généré, il ne reste plus qu'à l'inclure dans la page `client/public/index.html` :** ajoutez une balise `<script>` qui pointe vers `/build/main.bundle.js`.
 
