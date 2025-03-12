@@ -1,6 +1,6 @@
 <img src="images/readme/header.jpg">
 
-## Objectifs <!-- omit in toc -->
+## 🎯 Objectifs <!-- omit in toc -->
 - Développer un serveur web avec Node.js
 - Utiliser Express pour simplifier la création d'applis web back
 - Développer une application fullstack avec JS côté client et serveur
@@ -32,14 +32,14 @@
 2. **Ajoutez votre encadrant.e de TP en tant que "reporter"** (`@patricia.everaere-caillier` ou `@thomas.fritsch`)
 3. **Ouvrez le dossier du TP dans vscode.**
 4. **Installez les dépendances du projet** avec `npm i`
-5. ⚠️⚠️⚠️ **Contrairement aux TPs précédents, nous n'allons pas pour le moment compiler de code JS côté front**, nous ne lancerons donc pas `webpack-dev-server` (la commande `npm start`) pour nous concentrer dans un premier temps sur le code côté serveur
-6. **vérifiez que votre version de Node est bien `21.*.*`** : ouvrez un terminal intégré à vscodium en tapant <kbd>CTRL</kbd>+<kbd>J</kbd> (PC) / <kbd>CMD</kbd>+<kbd>J</kbd> (Mac) et tapez :
+5. ⚠️⚠️⚠️ **Contrairement aux TPs précédents, nous n'allons pas pour le moment compiler de code JS côté front**, nous ne lancerons donc pas `webpack-dev-server` (_la commande `npm start`_) pour nous concentrer dans un premier temps sur le code côté serveur
+6. **vérifiez que votre version de Node est bien `23.*.*`** : ouvrez un terminal intégré à vscodium en tapant <kbd>CTRL</kbd>+<kbd>J</kbd> (PC) / <kbd>CMD</kbd>+<kbd>J</kbd> (Mac) et tapez :
 	```bash
 	node -v
 	```
-	Si la version affichée dans le terminal n'est pas au moins la 21, suivez les instructions du TP1 du cours de JS pour installer nvm : https://gitlab.univ-lille.fr/js/tp1/-/blob/main/A-preparatifs-linux.md#2-installation-et-configuration-de-node
+	Si la version affichée dans le terminal n'est pas au moins la 23, suivez les instructions du TP1 du cours de JS pour installer nvm : https://gitlab.univ-lille.fr/js/tp1/-/blob/main/A-preparatifs-linux.md#2-installation-et-configuration-de-node
 
-7. **Récupérez et lisez le pdf du cours** sur moodle : https://moodle.univ-lille.fr/pluginfile.php/3900497/mod_resource/content/0/cours-jsae-2-nodejs-socketio.pdf)
+7. **Récupérez et lisez le pdf du cours** sur moodle : https://moodle.univ-lille.fr/pluginfile.php/4471693/mod_resource/content/0/cours-jsae-2-node-socket.pdf)
 
 	_**En cas de question interpellez votre encadrant.e de TP !**_
 
@@ -118,7 +118,7 @@ Dans les précédents TPs on avait vu que l'on pouvait débugger notre code fron
 
 Le principe c'est que, de la même manière qu'on laissait VSCode lancer un navigateur en mode debug pour nous, on va demander à VSCode de lancer notre appli en mode debug tout seul comme un grand.
 
-1. Ouvrez le fichier `.vscode/launch.json` qui contient les configs de debug du front en 3 versions (Chromium, Chrome et Firefox). Pour rappel il contient normalement ceci :
+1. Ouvrez le fichier `.vscode/launch.json` qui contient les configs de debug du front en 2 versions (Chromium et Chrome). Pour rappel il contient normalement ceci :
 	```json
 	{
 		// Use IntelliSense to learn about possible attributes.
@@ -133,10 +133,6 @@ Le principe c'est que, de la même manière qu'on laissait VSCode lancer un navi
 			{
 				"name": "Chrome Debug",
 				// config pour chrome...
-			},
-			{
-				"name": "Firefox Debug",
-				// config pour firefox...
 			},
 		]
 	}
@@ -157,7 +153,7 @@ Le principe c'est que, de la même manière qu'on laissait VSCode lancer un navi
 		],
 	}
 	```
-	> _**NB :** cette configuration est basée sur l'exemple fourni dans la documentation du debug Node dans VScode et permet de lancer notre script custom "npm run dev" : https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_launch-configuration-support-for-npm-and-other-tools ._
+	> _**NB :** cette configuration est basée sur l'exemple fourni dans la documentation du debug Node dans VScode et permet de lancer notre script custom "npm run dev" : https://code.visualstudio.com/docs/nodejs/nodejs-debugging#\_launch-configuration-support-for-npm-and-other-tools ._
 
 2. **Stoppez la commande `npm run server:watch` lancée au point C.1. et lancez le debug du serveur en appuyant sur la touche <kbd>F5</kbd>**
 
@@ -279,7 +275,7 @@ Le code **frontend** s'exécute (_après compilation par Babel et Webpack_) dans
 
 	<img src="images/readme/run-build-success.png">
 
-	> 🚧 _En cas d'erreur, pensez à vérifier que vous êtes bien sur la version 21 de node avec la commande `node -v` sinon installez-la avec `nvm install 21 && nvm use 21`._
+	> 🚧 _En cas d'erreur, pensez à vérifier que vous êtes bien sur la version 23 de node avec la commande `node -v` sinon installez-la avec `nvm install 23`._
 
 4. **Maintenant que le fichier compilé est généré, il ne reste plus qu'à l'inclure dans la page `client/public/index.html` :** ajoutez une balise `<script>` qui pointe vers `/build/main.bundle.js`.
 
@@ -399,7 +395,7 @@ Ce que l'on vous propose ici c'est plutôt de **migrer toute la partie "métier"
 
 2. **Dans le code côté client, supprimez l'import et tous les appels à ChatRepository.**
 
-	_**NB :** En principe votre appli ne fonctionne plus mais ne plante pas !_
+	> _**NB :** En principe votre appli ne fonctionne plus mais ne plante pas !_
 
 3. **Dans `server/index.js` instanciez le ChatRepository comme vous le faisiez précédemment côté client.**
 
@@ -429,7 +425,7 @@ Comme précédemment les messages envoyés par le client lui-même apparaissent 
 
 > _**NB :** si vous voulez suivre la consommation mémoire et cpu de votre application, je vous conseille d'installer [express-status-monitor (npm)](https://www.npmjs.com/package/express-status-monitor)_
 >
-> <img src="https://camo.githubusercontent.com/af0888e0bf053381a26c3c4d61d3aa4df75757cba20e5d87e2f48cc09f6041ec/687474703a2f2f692e696d6775722e636f6d2f4148697a4557712e676966">
+> <img src="https://camo.githubusercontent.com/78f8cfe1c858010d872aab08e4ffb110fdc56e6930fe73e19f1863bb5c120ea4/687474703a2f2f692e696d6775722e636f6d2f4148697a4557712e676966">
 >
 > _Pour l'utiliser, après l'avoir installé avec npm, ajoutez le code suivant à votre fichier `server/index.js` :_
 > ```js
