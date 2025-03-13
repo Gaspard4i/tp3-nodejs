@@ -6,5 +6,12 @@ export function renderMessage(message) {
 }
 
 export default function renderMessageList(messages) {
-	return messages.map(message => renderMessage(message)).join('');
+	// Pour rappel, myArray.map(fn) permet de créer un clone du tableau myArray,
+	// dans lequel les cellules sont "transformées" par la fonction fn passée en paramètre.
+	// Le .join('') permet de concaténer toutes les cellules en une seule chaîne.
+	return messages.map(renderMessage).join('');
+	// cette notation est équivalente à :
+	// return messages.map(message => renderMessage(message)).join('');
+	// ou encore :
+	// return messages.map(function(message){ return renderMessage(message) }).join('');
 }
