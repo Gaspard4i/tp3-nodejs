@@ -2,7 +2,6 @@
 
 ## 🎯 Objectifs <!-- omit in toc -->
 - Développer un serveur web avec Node.js
-- Utiliser Express pour simplifier la création d'applis web back
 - Développer une application fullstack avec JS côté client et serveur
 - Apprendre comment installer et utiliser Socket.io
 
@@ -13,9 +12,6 @@
 	- [C.1. Reload auto](#c1-reload-auto)
 	- [C.2. Debug dans VSCode](#c2-debug-dans-vscode)
 - [D. Créer un serveur web](#d-créer-un-serveur-web)
-	- [D.1. Serveur de base](#d1-serveur-de-base)
-	- [D.2. Express](#d2-express)
-	- [D.3. Fullstack](#d3-fullstack)
 - [E. Socket.io](#e-socketio)
 	- [E.1. Installation](#e1-installation)
 	- [E.2. Architecture](#e2-architecture)
@@ -153,7 +149,7 @@ Le principe c'est que, de la même manière qu'on laissait VSCode lancer un navi
 		],
 	}
 	```
-	> _**NB :** cette configuration est basée sur l'exemple fourni dans la documentation du debug Node dans VScode et permet de lancer notre script custom "npm run dev" : https://code.visualstudio.com/docs/nodejs/nodejs-debugging#\_launch-configuration-support-for-npm-and-other-tools ._
+	> _**NB :** cette configuration est basée sur l'exemple fourni dans la documentation du debug Node dans VScode et permet de lancer notre script custom "npm run dev" : https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_launch-configuration-support-for-npm-and-other-tools ._
 
 2. **Stoppez la commande `npm run server:watch` lancée au point C.1. et lancez le debug du serveur en appuyant sur la touche <kbd>F5</kbd>**
 
@@ -184,11 +180,11 @@ Le principe c'est que, de la même manière qu'on laissait VSCode lancer un navi
 
 ## D. Créer un serveur web
 
-**Comme expliqué dans le pdf du cours, il existe plusieurs façons de créer un serveur web. On va commencer par faire ça avec les fonctions de base de Node.js mais on utilisera ensuite Express pour simplifier le travail.**
+**Comme expliqué dans le pdf du cours, il existe plusieurs façons de créer un serveur web mais on va commencer par faire ça avec les fonctions de base de Node.js.**
 
-### D.1. Serveur de base
+En fin de TP, s'il vous reste du temps, on utilisera Express pour simplifier le code.
 
-1. **En vous servant du pdf du cours, modifiez votre fichier `server/index.js` pour lancer un serveur http** sur le port 8000 qui affiche le message "Think xxxxx, Think !" (_où `xxxxx` est le paramètre passé au lancement du serveur_) sur la page d'accueil (http://localhost:8000/).
+1. **En vous servant du pdf du cours, modifiez votre fichier `server/index.js` pour lancer un serveur http** sur le port 8080 qui affiche le message "Think xxxxx, Think !" (_où `xxxxx` est le paramètre passé au lancement du serveur_) sur la page d'accueil (http://localhost:8080/).
 
 2. **On a vu au chapitre précédent que l'on pouvait passer des valeurs à notre serveur sous la forme de paramètres envoyés dans le terminal. Une autre façon de paramétrer notre serveur est d'utiliser les variables d'environnement.**
 
@@ -200,10 +196,10 @@ Le principe c'est que, de la même manière qu'on laissait VSCode lancer un navi
 
 	Ce sera particulièrement précieux si vous déployez votre application chez un hébergeur : cela vous permettra par exemple de choisir si vous lancez votre site en http (_dev local_) ou en https (_hébergement en ligne_), le nom de domaine de l'application (_localhost en local / monsite.com en ligne_), etc.
 
-	Pour définir une variable d'environnement uniquement dans votre session de debug, vous pouvez ajouter une clé `"env"` dans votre configuration de debug dans le fichier `.vscode/launch.json`. Par exemple pour configurer le port de votre site, ajoutez la clé `"env"` suivante dans la config de debug node dans votre `launch.json` :
+	Pour définir une variable d'environnement uniquement dans votre session de debug, vous pouvez ajouter une clé `"env"` dans votre configuration de debug dans le fichier `.vscode/launch.json`. Par exemple pour configurer le port de votre serveur http, ajoutez la clé `"env"` suivante dans la config de debug node dans votre `launch.json` :
 	```json
 	"env": {
-		"PORT": "8000"
+		"PORT": "8080"
 	},
 	```
 
@@ -214,157 +210,86 @@ Le principe c'est que, de la même manière qu'on laissait VSCode lancer un navi
 	Essayez de faire en sorte d'avoir une valeur par défaut si jamais la variable `PORT` n'est pas renseignée !
 
 
-### D.2. Express
-
-_**Express est un micro-framework qui simplifie la création d'applis web avec Node.js.**_
-
-1. Commencez par stopper votre session de debug et **installez express :**
-	```bash
-	npm i express
-	```
-
-2. **En vous aidant du pdf du cours, importez Express dans votre projet** et modifiez votre fichier `server/index.js` de manière à avoir le même résultat que précédemment (`Think xxxxx, Think !` affiché dans la page http://localhost:8000/)
-
-3. À l'aide de la méthode [`app.get()` _(doc)_](https://expressjs.com/en/4x/api.html#app.get.method) et de la fonction [fs.readFileSync()](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options) **développez une mini API REST qui exploite les données contenues dans le fichier `/episodes.json`** (_fourni dans ce repo_) avec 2 endpoints
-	- `/api/episodes` : retourne la liste des tous les épisodes contenus dans le fichier `/episodes.json` avec pour chaque épisode uniquement leur id, leur nom et le numéro de l'épisode (ex. `"S01E02"`)
-	- `/api/episodes/x` : retourne toutes les infos de l'épisode dont l'id est `"x"`
-
-	> _**Indice :** pour des URL "variables" comme pour notre route `/api/episodes/x`, Express offre une syntaxe pratique : https://expressjs.com/en/guide/routing.html#route-parameters ._
-
-	> _**NB :** même s'il serait possible de récupérer le contenu du fichier `episodes.json` avec une instruction import on va plutôt ici utiliser `fs.readFileSync`, et ce pour 2 raisons :_
-	> 1. _D'abord **pour s'entraîner** à manipuler le système de fichiers avec Node_
-	> 2. _Ensuite si on utilise `import`, le fichier `episodes.json` ne sera chargé qu'une seule fois au démarrage du serveur (quand node arrivera sur la ligne `import`) : il sera du coup impossible de mettre à jour le fichier sans stopper puis relancer le serveur._ \
-	> 	_En utilisant `fs.readFileSync`, on pourrait récupérer le contenu du fichier à chaque requête (ou au bout d'un certain délai) et avoir toujours des données "fraîches"_
-	>
-	> _Comme indiqué dans la documentation :_ \
-	> _**"If the encoding option is specified then this function returns a string. Otherwise it returns a buffer."**_ \
-	> _Pour simplifier le travail, on va donc :_
-	> - _demander à `readFileSync` de nous retourner le contenu du fichier json sous la forme de chaîne de caractères (les Buffers c'est un peu galère à manipuler et inutile pour des fichiers texte) en passant en deuxième paramètre à la fonction l'objet `{ encoding: 'utf8' }`_
-	> - _une fois la chaîne JSON récupérée, il ne reste "plus qu'à" la parser à l'aide de `JSON.parse()`_
-
-
-### D.3. Fullstack
-
-**Le développement fullstack c'est développer une application à la fois backend et frontend.**
-
-Comme on utilise maintenant du JS à la fois pour le back et le front, c'est du coup beaucoup plus facile de faire du dev fullstack !
-
-Le code **backend** s'exécute dans **Node.js**, côté serveur.
-Le code **frontend** s'exécute (_après compilation par Babel et Webpack_) dans le **navigateur** des personnes qui visitent le site, côté client.
-
-1. **Observez le contenu du dossier `/client` :**
-
-	il contient un dossier `/client/src/` qui contient une solution du TP2 sur les tests (_appli de chat_), et un dossier `/client/public` qui contient plusieurs fichiers statiques (_html, css, images, etc._) mais les deux ne sont pas encore connectés.
-
-2. En vous aidant du middleware [`express.static` _(doc)_](http://expressjs.com/en/4x/api.html#express.static) et de l'exemple contenu dans le pdf du cours, **faites en sorte que votre serveur express retourne les fichiers contenus dans le dossier `client/public`** :
-
-	Par exemple, si on visite http://localhost:8000/, on doit voir le fichier `/client/public/index.html`. Si on se rend sur http://localhost:8000/css/main.css on doit voir le contenu du fichier `client/public/css/main.css`, etc.
-
-	> _**NB :** attention, le chemin que l'on passe à express.static est relatif au dossier dans lequel vous lancez le serveur c'est à dire la racine du TP : pas besoin ici de rajouter `../` devant le dossier `client/public`_
-
-
-3. Le fichier `client/src/main.js` est un fichier source que l'on va avoir besoin de compiler avec Babel et Webpack. **Modifiez les clés entry et output du fichier `webpack.config.js`** pour compiler le fichier `client/src/main.js` dans le fichier `client/public/build/main.bundle.js`.
-
-	**Une fois la config modifiée, lancez la compilation du code client dans un terminal intégré à VSCode :**
-
-	```bash
-	npm run client:build
-	```
-
-	la compilation doit fonctionner et générer le fichier `client/public/build/main.bundle.js` :
-
-	<img src="images/readme/run-build-success.png">
-
-	> 🚧 _En cas d'erreur, pensez à vérifier que vous êtes bien sur la version 23 de node avec la commande `node -v` sinon installez-la avec `nvm install 23`._
-
-4. **Maintenant que le fichier compilé est généré, il ne reste plus qu'à l'inclure dans la page `client/public/index.html` :** ajoutez une balise `<script>` qui pointe vers `/build/main.bundle.js`.
-
-	Ouvrez dans votre navigateur la page http://localhost:8000, vous devez en principe voir un prompt vous demander un nom d'utilisateur puis l'interface du chat s'afficher :
-
-	<img src="images/readme/screen-00.png">
-
-
-5. **On commence à avoir une base à peu prêt opérationnelle pour coder notre première appli fullstack mais il nous manque encore quelque chose pour être efficaces : le live-reload avec webpack-dev-server.**
-
-	Dans les précédents TPs on lançait `webpack-dev-server` avec le script `npm start` (_renommé en `npm run client:start` à l'étape [B. Premier script Node.js](#b-premier-script-nodejs)_) qui lançait la commande `webpack serve --mode=development` (_script configuré lors du [TP3 / C.6. Webpack : Live reload](https://gitlab.univ-lille.fr/js/tp3/-/blob/main/C-modules.md#c6-webpack-live-reload)_).
-
-	On pourrait (au prix de quelques adaptations) continuer d'utiliser cette méthode mais on aurait alors au final 2 serveurs à lancer : notre serveur node à nous (`server/index.js`) et le serveur de développement de `webpack-dev-server`, ce qui n'est pas hyper optimal.
-
-	Pour faire court, il est possible d'intégrer webpack-dev-server directement dans notre propre serveur afin qu'il soit capable non seulement de servir notre appli express mais aussi de compiler à la volée le code client.
-
-	Commencez par installer les 2 paquets suivants :
-	```bash
-	npm i -D webpack-dev-middleware webpack-hot-middleware
-	```
-
-	Puis créez un fichier `server/middlewares/addWebpackMiddleware.js` avec le code suivant :
-	```js
-	import webpack from 'webpack';
-	import webpackDevMiddleware from 'webpack-dev-middleware';
-	import webpackHotMiddleware from 'webpack-hot-middleware';
-	import webpackConfig from '../../webpack.config.js';
-
-	export default function addWebpackMiddleware(app) {
-		const webpackConfigForMiddleware = {
-			...webpackConfig,
-			mode: 'development', // on force le mode development
-			plugins: [new webpack.HotModuleReplacementPlugin()], // on ajoute le plugin Hot
-		};
-		if (typeof webpackConfigForMiddleware.entry === 'string') {
-			webpackConfigForMiddleware.entry = [
-				'webpack-hot-middleware/client?reload=true', // ajout du script permettant le reload
-				webpackConfigForMiddleware.entry, // notre fichier client/src/main.js
-			];
-		}
-		const compiler = webpack(webpackConfigForMiddleware);
-		// activation des 2 middlewares nécessaires au live-reload :
-		app.use(
-			webpackDevMiddleware(compiler, {
-				publicPath: webpackConfig.output?.publicPath,
-			})
-		);
-		app.use(webpackHotMiddleware(compiler));
-	}
-	```
-	Enfin, dans votre fichier `server/index.js` appelez la fonction `addWebpackMiddleware` que l'on vient de créer (_avant tout appel à `app.use()` ou `app.get()`_) :
-	```js
-	addWebpackMiddleware(app);
-	```
-
-	**Voilà, c'était un peu laborieux mais maintenant votre serveur Node est capable de recompiler lui-même le code JS du front et de recharger le navigateur dès que vous modifiez un fichier du front.** Ça devrait en principe vous permettre de gagner beaucoup de temps sur la suite !
-
 ## E. Socket.io
 
 <img src="images/readme/header-socket.jpg">
 
-_**Après tous ces préparatifs, nous arrivons enfin au gros morceau de ce TP : Socket.io**_
+_**Après tous ces préparatifs, nous arrivons maintenant au gros morceau de ce TP : Socket.IO**_
 
-Comme expliqué dans le pdf du cours, Socket.io est une bibliothèque qui va simplifier la mise en place d'applications basées sur les websocket (_applications temps réel et communications bidirectionnelles client ⭤ serveur, du genre tableau blanc, chat, jeu en ligne, etc._)
+Comme expliqué dans le pdf du cours, [Socket.IO](https://socket.io/) est une bibliothèque qui va simplifier la mise en place d'applications basées sur les websocket (_applications temps réel et communications bidirectionnelles client ⭤ serveur, du genre tableau blanc, chat, jeu en ligne, etc._).
+
+On va l'utiliser pour développer un serveur de chat qui sera utilisé par notre front à la place du BroadcastChannel qu'on avait mis en place dans le TP2.
+
+Vous aurez donc 2 serveurs HTTP à lancer :
+- **1 serveur sur le port 8000** avec `webpack-dev-server` pour **servir le front** de votre application (html, css, js) contenu dans le dossier `/client` (_solution du TP2_). Pour rappel ce serveur sert aussi à compiler le code JS front avec webpack et Babel (_utile pour la compatibilité navigateur !_)
+- **1 serveur sur le port 8080** avec Socket.IO pour **gérer le back** à savoir la connexion websocket et le "domaine"/"modèle"  (_envoi / réception des messages_)
 
 ### E.1. Installation
 
-1. **Commencez par installer socket.io dans le TP :**
+1. **Commencez par installer Socket.IO dans le TP :**
 	```bash
 	npm i socket.io socket.io-client
 	```
-2. **Créez un serveur websocket avec socket.io dans `server/index.js` :**
+
+2. **Relancez le serveur de développement de `webpack-dev-server` dans un 2e terminal splitté :**
+	```bash
+	npm run client:start
+	```
+
+	> ⚠️ _**Attention, vous devez bien avoir 2 serveurs qui tournent** : `npm run client:start` et `npm run server:watch` (lancé par la session de debug)_
+
+	> <details><summary>🚧 <em>La commande ne se lance pas ?</em></summary>
+	>
+	> _Vérifiez que comme demandé au point B.6. vous avez bien renommé les scripts `"build"`, `"watch"` et `"start"` en `"client:build"`, `"client:watch"` et `"client:start"` !_
+	> </details>
+
+	Ouvrez votre navigateur sur http://localhost:8000 et vérifiez que votre app JSelegram s'affiche correctement.
+
+3. **Créez un serveur websocket avec Socket.IO dans `server/index.js` :**
 	```js
 	import { Server as IOServer } from 'socket.io';
-
-	const io = new IOServer(httpServer);
+	// ...
+	const io = new IOServer(httpServer, { cors: true });
 	io.on('connection', socket => {
 		console.log(`Nouvelle connexion du client ${socket.id}`);
 	});
+	// ...
 	```
-3. **Dans le fichier `client/src/main.js` connectez le front au serveur websocket avec le code suivant :**
+	> <details><summary>ℹ️ <em>C'est quoi ce paramètre <code>{ cors: true }</code></em></summary>
+	>
+	> _Comme on lance notre serveur websocket sur un domaine différent (8080) du serveur qui sert le front (8000) comme c'est notre cas, les navigateurs appliquent la [**Same Origin Policy (mdn)**](https://developer.mozilla.org/fr/docs/Web/Security/Same-origin_policy) dont on avait parlé dans le cours 4 sur AJAX (reprenez le pdf si ce n'est plus clair)._
+	>
+	> _En ajoutant ce paramètre `cors` on **active le protocole CORS** pour autoriser les connexions au serveur websocket depuis n'importe quel autre domaine (y compris donc http://localhost:8000)_
+	>
+	> 📖 _Plus d'informations dans la **documentation** ici : https://socket.io/docs/v4/handling-cors/_
+	> </details>
+
+4. **Dans le fichier `client/src/main.js` connectez le front au serveur websocket avec le code suivant :**
 	```js
 	import { io } from 'socket.io-client';
-	const socket = io();
+	const socket = io(window.location.hostname + ':8080');
 	```
 
-	Ce code suffit à connecter le client au serveur socket.io ! Ouvrez plusieurs onglets de votre navigateur sur http://localhost:8000 et regardez dans la Debug Console de VSCode : vous devez en principe voir passer des messages `"Nouvelle connexion du client xxxxxxx"` !
+	Ce code suffit à connecter le client au serveur Socket.IO ! Ouvrez plusieurs onglets de votre navigateur sur http://localhost:8000 et regardez dans la Debug Console de VSCode : vous devez en principe voir passer des messages `"Nouvelle connexion du client xxxxxxx"` !
 
-4. **Vous pouvez détecter la déconnexion d'un client en modifiant le code comme ceci :**
+	> <details><summary>ℹ️ <em>Pourquoi on utilise <code>window.location.hostname</code> et pas 'localhost:8080' en dur ?</em></summary>
+	>
+	> _Effectivement, dans le pdf du cours, on avait le code suivant :_
+	> ```js
+	> const socket = io('localhost:1337');
+	> ```
+	> _Dans le code que je vous ai suggéré plus haut, à la place de `"localhost"` on utilise `window.location.hostname` qui est une propriété qui permet de récupérer dynamiquement le nom de domaine courant._
+	>
+	> _Si vous chargez votre application sur http://localhost:8000, au final les 2 codes fonctionneront de la même manière (puisque `window.location.hostname` retournera `'localhost'`)._
+	>
+	> _En revanche si on se projette un peu dans votre future SAE, vous aurez besoin d'accéder à votre appli depuis plusieurs machines différentes (pour pouvoir jouer à plusieurs !). Et là ça ne sera pas la même histoire._
+	>
+	> _Au lieu d'utiliser http://localhost:8000, les joueuses et les joueurs devront utiliser l'adresse IP de votre machine pour accéder au front de votre app (par exemple http://192.168.0.32:8000). Si vous avez mis en dur `io('localhost:8080')` dans votre code, alors personne n'arrivera à se connecter à votre serveur Socket.IO !_ 😢
+	>
+	> _En utilisant window.location.hostname, votre appli utilisera automatiquement la bonne URL de connexion (`192.168.0.32:8080`) !_ 🥳
+	> </details>
+
+5. **Vous pouvez détecter la déconnexion d'un client en ajoutant un écouteur d'événement `'disconnect'` comme ceci :**
 	```js
 	io.on('connection', socket => {
 		console.log(`Nouvelle connexion du client ${socket.id}`);
@@ -377,33 +302,33 @@ Comme expliqué dans le pdf du cours, Socket.io est une bibliothèque qui va sim
 	Ouvrez et fermez des onglets sur votre site, les messages de connexion/déconnexion doivent s'afficher.
 
 ### E.2. Architecture
-**Maintenant que socket.io est en place, vous allez pouvoir commencer à modifier le chat pour faire en sorte qu'on puisse échanger des messages via socket.io et plus via le `BroadcastChannel` ! Mais avant ça posons nous 2 secondes sur l'architecture de notre application.**
+**Maintenant que Socket.IO est en place, vous allez pouvoir commencer à modifier le chat pour faire en sorte qu'on puisse échanger des messages via Socket.IO et plus via le `BroadcastChannel` ! Mais avant ça posons nous 2 secondes sur l'architecture de notre application.**
 
-Techniquement, on pourrait pour cet exercice se contenter de remplacer les appels aux méthodes de `BroadcastChannel` par des appels aux méthodes de socket.io. L'inconvénient c'est qu'on se retrouverait alors avec les mêmes limites qu'on avait jusque là : impossible de récupérer l'historique lorsqu'on se connecte, risque d'incohérence entre la liste des messages affichés dans 2 fenêtres différentes si problème réseau, etc.
+Techniquement, on pourrait pour cet exercice se contenter de remplacer les appels aux méthodes de `BroadcastChannel` par des appels aux méthodes de Socket.IO. L'inconvénient c'est qu'on se retrouverait alors avec les mêmes limites qu'on avait jusque là : impossible de récupérer l'historique lorsqu'on se connecte, risque d'incohérence entre la liste des messages affichés dans 2 fenêtres différentes si problème réseau, etc.
 
 Ce que l'on vous propose ici c'est plutôt de **migrer toute la partie "métier" de l'application (le `"ChatRepository"`) côté serveur** ! Avec cette technique c'est le serveur qui va **"centraliser"** la logique métier (_l'historique des messages_) et servir de **"source d'information unique"** (_["Single source of truth"](https://en.wikipedia.org/wiki/Single_source_of_truth)_) pour tous les clients connectés.
 
 1. **Commencez par déplacer les fichiers `client/src/ChatRepository.js` et `client/src/ChatRepository.test.js` dans le dossier `/server/`.**
 
-	Lancez dans un terminal de VSCode la commande :
+	Lancez dans un terminal de VSCode vos tests unitaires avec la commande :
 
-	```
+	```bash
 	npm run test:watch
 	```
 
-	⚠️ **Cette commande devra rester lancée pendant toute la suite du TP !** Gardez bien un oeil dessus en permanence ! 👀 ⚠️ Il est probable que vous ayez à modifier le ChatRepository et donc les tests dans la suite du TP.
+	> ⚠️ **Cette commande devra rester lancée pendant toute la suite du TP !** Gardez bien un oeil dessus en permanence ! 👀 ⚠️ Il est probable que vous ayez à modifier le `ChatRepository` -et donc les tests- dans la suite du TP.
 
 2. **Dans le code côté client, supprimez l'import et tous les appels à ChatRepository.**
 
-	> _**NB :** En principe votre appli ne fonctionne plus mais ne plante pas !_
+	> ℹ️ _En principe maintenant votre appli front ne fonctionne plus du tout mais elle ne doit remonter aucune erreur._
 
-3. **Dans `server/index.js` instanciez le ChatRepository comme vous le faisiez précédemment côté client.**
+3. **Dans `server/index.js` instanciez le `ChatRepository` comme vous le faisiez précédemment côté client.**
 
 
 ### E.3. Mise en oeuvre
 **Maintenant que les choses sont bien rangées, vous allez pouvoir coder votre serveur websocket.**
 
-Avec socket.io, on dispose de plusieurs méthodes pour envoyer des messages du client vers le serveur ou du serveur vers les clients :
+Avec Socket.IO, on dispose de plusieurs méthodes pour envoyer des messages du client vers le serveur ou du serveur vers les clients :
 
 **côté client on peut utiliser :**
 - [socket.on](https://socket.io/docs/v4/client-api/#socketoneventname-callback) pour **recevoir** des messages depuis le serveur
@@ -415,29 +340,12 @@ Avec socket.io, on dispose de plusieurs méthodes pour envoyer des messages du c
 - [socket.on](https://socket.io/docs/v4/server-api/#socketoneventname-callback) pour **recevoir** les messages envoyés **par un client** en particulier
 - [socket.emit](https://socket.io/docs/v4/server-api/#socketemiteventname-args) pour **envoyer** un message **à un client** en particulier
 
-**À l'aide de ces différentes méthodes, modifiez le mini chat pour faire en sorte qu'on puisse échanger des messages via socket.io et plus via le `BroadcastChannel` :**
+**À l'aide de ces différentes méthodes, modifiez le mini chat pour faire en sorte qu'on puisse échanger des messages via Socket.IO et plus via le `BroadcastChannel` :**
 
-1. si on tape un message dans le champ de saisie et qu'on soumet le formulaire, le message est envoyé à tous les autres clients connectés
-2. quand un client envoie un message, il s'affiche dans l'historique des messages de tous les clients connectés
-3. quand un nouveau client se connecte, il récupère l'ensemble de l'historique des messages
+1. si on tape un message dans le champ de saisie et qu'on soumet le formulaire, le message est envoyé **à tous les autres clients** connectés
+2. quand un client envoie un message, il s'affiche dans l'historique des messages **de tous les clients connectés**
+3. quand un nouveau client se connecte, il récupère l'ensemble de **l'historique des messages**
 
-Comme précédemment les messages envoyés par le client lui-même apparaissent différemment de ceux des autres clients.
+Comme précédemment les messages envoyés par le client lui-même doivent apparaître différemment de ceux des autres clients.
 
-> _**NB :** si vous voulez suivre la consommation mémoire et cpu de votre application, je vous conseille d'installer [express-status-monitor (npm)](https://www.npmjs.com/package/express-status-monitor)_
->
-> <img src="https://camo.githubusercontent.com/78f8cfe1c858010d872aab08e4ffb110fdc56e6930fe73e19f1863bb5c120ea4/687474703a2f2f692e696d6775722e636f6d2f4148697a4557712e676966">
->
-> _Pour l'utiliser, après l'avoir installé avec npm, ajoutez le code suivant à votre fichier `server/index.js` :_
-> ```js
-> import expressStatusMonitor from 'express-status-monitor';
-> // permet d'avoir une page http://localhost/status pour suivre la consommation mémoire/cpu/etc.
-> app.use(expressStatusMonitor({ websocket: io }));
-> ```
-> _puis modifiez la création du serveur socket.io :_
-> ```js
-> const io = new IOServer(httpServer, {
->	// pour permettre à express-status-monitor de fonctionner
->	// cf. https://github.com/RafalWilinski/express-status-monitor/issues/181#issuecomment-1086649762
->	allowEIO3: true,
-> });
-> ```
+
